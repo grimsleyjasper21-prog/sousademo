@@ -55,19 +55,34 @@ export function buildBookingPayload(b: BookingDetails) {
   ].join("\n");
 
   return {
+    // Confirmed required by the endpoint (it rejected a request missing this
+    // exact snake_case key), so the whole payload follows that convention.
     token: DEMO_TOKEN,
     source: "sousa-demo",
     title,
     description,
     summary: title,
     date: b.date,
-    startTime: b.startTime,
-    endTime,
+    start_time: b.startTime,
+    end_time: endTime,
     start: `${b.date}T${b.startTime}:00`,
     end: `${b.date}T${endTime}:00`,
-    timeZone: TIMEZONE,
+    time_zone: TIMEZONE,
     service: svcName,
+    service_name: svcName,
     category: catName,
+    duration_min: b.service.durationMin,
+    price_eur: b.service.priceEUR,
+    customer_name: fullName,
+    customer_first_name: b.name,
+    customer_last_name: b.surname,
+    customer_phone: b.phone,
+    customer_email: b.email,
+    customer_notes: b.notes,
+    // Kept alongside for compatibility in case other fields are read camelCase.
+    startTime: b.startTime,
+    endTime,
+    timeZone: TIMEZONE,
     durationMin: b.service.durationMin,
     priceEUR: b.service.priceEUR,
     customerName: fullName,
