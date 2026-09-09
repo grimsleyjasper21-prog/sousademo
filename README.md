@@ -1,55 +1,53 @@
-# Salón Vera — Bilingual Hair Salon PWA (Demo)
+# SOUSA — The Hair Expert
 
-A responsive, bilingual (Español / English) demo website for a hair salon in
-Palma de Mallorca, with an online booking wizard and installable PWA support.
+A cinematic prospect-demo website for **SOUSA — The Hair Expert**, a boutique hair
+salon in Palma de Mallorca. Built by GRIMHART to demonstrate what a premium
+website + booking product + installable app looks like for a local business.
 
-This is a static, front-end-only demo: no build step, no backend. Bookings
-are stored in the browser's `localStorage` only and are never sent anywhere.
+Next.js (App Router, TypeScript, Tailwind v4) + GSAP/ScrollTrigger for the
+cinematic scroll sequence. Deployable to Vercel with no extra configuration.
 
-## Features
+## Highlights
 
-- **Bilingual UI** (ES/EN) with a language toggle, persisted in `localStorage`
-  and defaulted from the browser's language.
-- **Responsive layout**: mobile-first, with a collapsible nav on small screens.
-- **4-step booking wizard**: service → date & time → your details → confirm,
-  with validation, a generated booking reference, and a "manage my bookings"
-  view to cancel a booking.
-- **PWA**: web app manifest, installable on desktop/mobile, custom install
-  banner (with an iOS "Add to Home Screen" hint), and a service worker that
-  precaches the app shell so the whole site keeps working offline.
+- **Cinematic editorial identity** — near-black/bone/copper palette, Bodoni
+  Moda display type paired with Archivo, full-bleed campaign photography
+  generated for this demo.
+- **THE STRAND** (`src/components/TheStrand.tsx`) — a pinned, scroll-scrubbed
+  GSAP sequence (precision → cut → transformation → colour → resolve) with a
+  static, non-pinned fallback under `prefers-reduced-motion`.
+- **Complete booking product** (`src/components/Booking.tsx`) — category →
+  service → date → time → details → review → confirmation, with a 90-day,
+  duration-aware, opening-hours-aware demo calendar
+  (`src/lib/availability.ts`).
+- **Real Google Calendar submission** (`src/lib/calendar.ts`) — POSTs to the
+  GRIMHART Apps Script demo endpoint on confirmation; shows loading / success
+  / error (with retry + WhatsApp fallback) and never claims success unless the
+  request actually succeeded.
+- **Installable PWA** — manifest + icons + service worker
+  (`public/manifest.json`, `public/sw.js`), an install banner, a dedicated
+  `/app` route for an NFC card in the salon, and iOS "Add to Home Screen"
+  instructions.
+- **Bilingual (ES default / EN)** — `src/lib/i18n-dict.ts` +
+  `src/lib/i18n.tsx`.
+- **Demo services & prices** (`src/lib/services-data.ts`) are fictional —
+  see the disclaimer on the Services and Booking sections.
+- The site sets `robots: noindex, nofollow` and ships a `Disallow: /`
+  `robots.txt` — this is a prospect demo, not the production SOUSA site.
 
 ## Running locally
 
-No build tools required — any static file server works, e.g.:
-
 ```bash
-python3 -m http.server 8080
-# then open http://localhost:8080/
+npm install
+npm run dev
 ```
 
-Note: the service worker only registers on `localhost`/`127.0.0.1` or over
-HTTPS (browser requirement), so plain `file://` won't enable offline mode or
-install prompts — serve it over HTTP(S) as above.
+`npm run build && npm run start` for a production build.
 
-## Project structure
+## Structure
 
 ```
-index.html          Single-page site (all sections)
-offline.html         Fallback page for uncached routes when offline
-manifest.json         PWA manifest
-sw.js                 Service worker (app-shell precache)
-css/styles.css        Responsive styles, light/dark aware
-js/i18n.js            ES/EN translation dictionary
-js/app.js             i18n engine, nav, language toggle, install prompt, SW registration
-js/booking.js         Booking wizard logic + localStorage persistence
-icons/                Generated PWA icons (maskable + regular)
+src/app/            Root layout, home page, /app (install) route
+src/components/      Section components (Hero, TheStrand, Booking, ...)
+src/lib/             i18n, services/pricing data, availability, calendar
+public/              manifest.json, sw.js, icons/
 ```
-
-## Customizing
-
-- Edit `js/i18n.js` to change any copy in either language.
-- Edit the `SERVICES`/`STYLISTS` list in `js/booking.js` and the matching
-  `services.list` / `about.team` entries in `js/i18n.js` to change services,
-  prices, or staff.
-- Salon hours/closed day live in `js/booking.js` (`generateTimeSlots`,
-  `isSunday`).
