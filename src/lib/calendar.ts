@@ -4,9 +4,13 @@
 // see the brief: website -> Google Apps Script -> Google Calendar.
 import { categoryLabel, serviceName, type Service } from "./services-data";
 
+// Per-client deploys override these via env vars (see
+// google-apps-script/README.md) so each client's bookings land on
+// THEIR own Google Calendar instead of the shared GRIMHART demo one.
 const ENDPOINT =
+  process.env.NEXT_PUBLIC_CALENDAR_ENDPOINT_URL ||
   "https://script.google.com/macros/s/AKfycbz75pRcZqQpXrQ_OUHiJrOOUneEhQBffVubTln7PSOedfb0T0FgRD2zJiNM34lyuA_y/exec";
-const DEMO_TOKEN = "foryou-grimhart-demo-2026";
+const DEMO_TOKEN = process.env.NEXT_PUBLIC_CALENDAR_DEMO_TOKEN || "foryou-grimhart-demo-2026";
 const TIMEZONE = "Europe/Madrid";
 
 export type BookingDetails = {

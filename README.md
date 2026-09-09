@@ -19,10 +19,12 @@ cinematic scroll sequence. Deployable to Vercel with no extra configuration.
   service → date → time → details → review → confirmation, with a 90-day,
   duration-aware, opening-hours-aware demo calendar
   (`src/lib/availability.ts`).
-- **Real Google Calendar submission** (`src/lib/calendar.ts`) — POSTs to the
-  GRIMHART Apps Script demo endpoint on confirmation; shows loading / success
-  / error (with retry + WhatsApp fallback) and never claims success unless the
-  request actually succeeded.
+- **Real Google Calendar submission** (`src/lib/calendar.ts`) — POSTs to a
+  Google Apps Script endpoint on confirmation; shows loading / success /
+  error (with retry + WhatsApp fallback) and never claims success unless the
+  request actually succeeded. Defaults to the shared GRIMHART demo endpoint;
+  **for a real client, deploy your own copy so bookings land on their
+  calendar, not GRIMHART's** — see `google-apps-script/README.md`.
 - **Installable PWA** — manifest + icons + service worker
   (`public/manifest.json`, `public/sw.js`), an install banner, a dedicated
   `/app` route for an NFC card in the salon, and iOS "Add to Home Screen"
