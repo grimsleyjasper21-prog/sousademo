@@ -30,6 +30,7 @@ export default function Nav() {
   ];
 
   return (
+    <>
     <header
       className="fixed top-0 inset-x-0 z-50 transition-colors duration-300"
       style={{
@@ -81,11 +82,15 @@ export default function Nav() {
           <span className="block w-6 h-px bg-[var(--bone)]" />
         </button>
       </div>
+    </header>
 
       <div
-        className="md:hidden fixed inset-0 z-50 flex flex-col bg-[var(--ink)] transition-[clip-path] duration-400 ease-out"
+        className="md:hidden fixed inset-0 z-50 flex flex-col overflow-y-auto"
         style={{
-          clipPath: open ? "circle(150% at 100% 0%)" : "circle(0% at 100% 0%)",
+          background: "var(--ink)",
+          clipPath: open ? "circle(150vmax at 100% 0%)" : "circle(0px at 100% 0%)",
+          WebkitClipPath: open ? "circle(150vmax at 100% 0%)" : "circle(0px at 100% 0%)",
+          transition: "clip-path 400ms ease-out",
         }}
       >
         <div className="container-editorial flex items-center justify-between h-16">
@@ -124,6 +129,6 @@ export default function Nav() {
           </Link>
         </div>
       </div>
-    </header>
+    </>
   );
 }
