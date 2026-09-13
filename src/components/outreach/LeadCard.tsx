@@ -38,7 +38,9 @@ export default function LeadCard({
   const [menuOpen, setMenuOpen] = useState(false);
 
   const hasMessage = Boolean(lead.message);
-  const whatsappHref = lead.normalized_phone ? whatsappLinkFor(lead.normalized_phone) : null;
+  const whatsappHref = lead.normalized_phone
+    ? whatsappLinkFor(lead.normalized_phone, lead.message ?? undefined)
+    : null;
 
   function startEdit() {
     setDraft(lead.message ?? "");
@@ -97,20 +99,40 @@ export default function LeadCard({
         )}
       </div>
 
+      {!editing && (
+        <a
+          href={whatsappHref ?? undefined}
+          target="_blank"
+          rel="noreferrer"
+          className="oe-btn oe-btn-primary !text-base !py-3.5 w-full"
+          aria-disabled={!whatsappHref || !hasMessage}
+          onClick={(e) => {
+            if (!whatsappHref || !hasMessage) {
+              e.preventDefault();
+              return;
+            }
+            onMarkSent();
+          }}
+          style={!whatsappHref || !hasMessage ? { opacity: 0.45, pointerEvents: "none" } : undefined}
+        >
+          Message on WhatsApp →
+        </a>
+      )}
+
       <div className="flex flex-wrap items-center gap-2">
-        <button type="button" className="oe-btn oe-btn-primary" onClick={onCopyNumber} disabled={!lead.normalized_phone}>
+        <button type="button" className="oe-btn oe-btn-ghost oe-btn-sm" onClick={onCopyNumber} disabled={!lead.normalized_phone}>
           Copy number
         </button>
         <button
           type="button"
-          className="oe-btn oe-btn-primary"
+          className="oe-btn oe-btn-ghost oe-btn-sm"
           onClick={onCopyMessage}
           disabled={!hasMessage || editing}
         >
           Copy message
         </button>
-        <button type="button" className="oe-btn oe-btn-outline" onClick={onMarkSent}>
-          Mark sent
+        <button type="button" className="oe-btn oe-btn-ghost oe-btn-sm" onClick={onMarkSent}>
+          Mark sent manually
         </button>
 
         <span className="flex-1" />
@@ -163,11 +185,6 @@ export default function LeadCard({
                 </div>
               )}
             </div>
-            {whatsappHref && (
-              <a href={whatsappHref} target="_blank" rel="noreferrer" className="oe-btn oe-btn-ghost oe-btn-sm">
-                Open WhatsApp
-              </a>
-            )}
           </>
         )}
       </div>
