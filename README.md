@@ -48,8 +48,56 @@ npm run dev
 ## Structure
 
 ```
-src/app/            Root layout, home page, /app (install) route
+src/app/(site)/      SOUSA site — root layout, home page, /app (install) route
 src/components/      Section components (Hero, TheStrand, Booking, ...)
 src/lib/             i18n, services/pricing data, availability, calendar
 public/              manifest.json, sw.js, icons/
 ```
+
+---
+
+## GRIMHART Outreach Engine
+
+An internal-only tool (separate root layout under `src/app/(outreach)/`, served
+at `/outreach`) for GRIMHART's own outbound sales workflow: import an
+Outscraper CSV export once a month, then work through a daily queue of
+AI-drafted WhatsApp outreach messages — copy number, copy message, send
+manually, mark sent, next.
+
+### Setup
+
+1. Install dependencies: `npm install`
+2. Create a Supabase project.
+3. Run `supabase/migrations/0001_init.sql` in the Supabase SQL editor (creates
+   `batches`, `leads`, `settings` and all indexes).
+4. Copy `.env.example` to `.env.local` and fill in:
+   - `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (Supabase Settings → API)
+   - `ANTHROPIC_API_KEY` for real message generation. Without it, the app
+     automatically falls back to a mock generator (`AI_MOCK_MODE`) so the UI
+     and workflow can still be tested end-to-end.
+5. `npm run dev` and open `/outreach`.
+6. Go to **Import**, drag in your Outscraper CSV export, and open **Today**.
+
+### How it works
+
+- **Import**: tolerant column matching (handles Outscraper's varying export
+  columns without any manual mapping), `libphonenumber-js` normalization
+  (default region `ES`), permanently-closed filtering, and two-layer
+  duplicate detection (normalized phone, then business name + city). The
+  full original row is kept in `leads.raw_data`. Every import creates a new
+  `batches` row; only one batch is active at a time.
+- **Today**: the queue is derived, not stored — the first N (`daily_target`,
+  default 30) uncontacted leads in the active batch, ordered by import
+  order. Messages are generated automatically in small batches via the
+  Anthropic API (tool-use forces valid structured JSON, validated again with
+  Zod before saving) so a partial failure never loses already-generated
+  messages. "Sent Today" resets naturally each day based on `contacted_at`
+  in `Europe/Madrid`.
+- **Leads / History**: a plain searchable/filterable table over the same
+  `leads` table — no separate pipeline state to keep in sync.
+- **Settings**: daily target, default language behaviour, and the two AI
+  prompt fields (GRIMHART context + base outreach instructions) editable
+  without a redeploy.
+
+All state lives in Postgres — refreshing the browser never loses leads,
+messages, or sent status.

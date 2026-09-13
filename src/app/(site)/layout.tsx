@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Archivo } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { I18nProvider } from "@/lib/i18n";
 import { PwaProvider } from "@/lib/pwa";
 import { SALON } from "@/lib/services-data";

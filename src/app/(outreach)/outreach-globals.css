@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+
+  --oe-black: #0a0a0b;
+  --oe-charcoal: #16171a;
+  --oe-charcoal-2: #1e2023;
+  --oe-white: #f6f6f4;
+  --oe-white-dim: #b7b7b3;
+  --oe-white-faint: #787874;
+  --oe-line: rgba(246, 246, 244, 0.1);
+  --oe-line-strong: rgba(246, 246, 244, 0.22);
+  --oe-focus: #f6f6f4;
+
+  --oe-status-uncontacted: #8a8a86;
+  --oe-status-sent: #d8d8d4;
+  --oe-status-replied: #c9a86a;
+  --oe-status-interested: #8fb3d9;
+  --oe-status-won: #8fbf8f;
+  --oe-status-lost: #c97a7a;
+
+  --font-oe-display: var(--font-oe-bodoni), Georgia, "Times New Roman", serif;
+  --font-oe-body: var(--font-oe-archivo), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --oe-sidebar-w: 232px;
+}
+
+.oe-root * {
+  box-sizing: border-box;
+}
+
+.oe-root {
+  background: var(--oe-black);
+  color: var(--oe-white);
+  font-family: var(--font-oe-body);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.oe-root h1,
+.oe-root h2,
+.oe-root h3 {
+  font-family: var(--font-oe-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.oe-root p {
+  margin: 0;
+  color: var(--oe-white-dim);
+}
+
+.oe-root ::selection {
+  background: var(--oe-white);
+  color: var(--oe-black);
+}
+
+.oe-root :focus-visible {
+  outline: 2px solid var(--oe-focus);
+  outline-offset: 2px;
+}
+
+.oe-eyebrow {
+  font-family: var(--font-oe-body);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--oe-white-faint);
+}
+
+.oe-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.oe-hairline {
+  border-color: var(--oe-line);
+}
+
+/* Layout */
+.oe-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.oe-sidebar {
+  width: var(--oe-sidebar-w);
+  flex-shrink: 0;
+  border-right: 1px solid var(--oe-line);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.oe-main {
+  flex: 1;
+  min-width: 0;
+  padding: 2.5rem clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.oe-wordmark {
+  font-family: var(--font-oe-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+
+.oe-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.oe-nav-link {
+  display: block;
+  padding: 0.55em 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--oe-white-faint);
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s ease;
+}
+
+.oe-nav-link:hover {
+  color: var(--oe-white);
+}
+
+.oe-nav-link[data-active="true"] {
+  color: var(--oe-white);
+}
+
+@media (max-width: 860px) {
+  .oe-shell {
+    flex-direction: column;
+  }
+  .oe-sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.25rem;
+    gap: 1rem;
+    overflow-x: auto;
+  }
+  .oe-sidebar-nav {
+    display: flex;
+    gap: 1.25rem;
+  }
+  .oe-nav-link {
+    padding: 0.25em 0;
+    white-space: nowrap;
+  }
+  .oe-main {
+    padding: 1.5rem 1.25rem 3rem;
+  }
+}
+
+/* Buttons */
+.oe-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-family: var(--font-oe-body);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.8em 1.4em;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.oe-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.oe-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.oe-btn-primary {
+  background: var(--oe-white);
+  color: var(--oe-black);
+}
+.oe-btn-primary:hover:not(:disabled) {
+  background: #dcdcd8;
+}
+
+.oe-btn-outline {
+  background: transparent;
+  color: var(--oe-white);
+  border-color: var(--oe-line-strong);
+}
+.oe-btn-outline:hover:not(:disabled) {
+  border-color: var(--oe-white);
+}
+
+.oe-btn-ghost {
+  background: transparent;
+  color: var(--oe-white-dim);
+  border-color: transparent;
+  padding: 0.8em 0.9em;
+}
+.oe-btn-ghost:hover:not(:disabled) {
+  color: var(--oe-white);
+}
+
+.oe-btn-sm {
+  padding: 0.55em 0.9em;
+  font-size: 0.72rem;
+}
+
+/* Cards / surfaces */
+.oe-card {
+  background: var(--oe-charcoal);
+  border: 1px solid var(--oe-line);
+  border-radius: 3px;
+}
+
+.oe-field {
+  background: var(--oe-black);
+  border: 1px solid var(--oe-line-strong);
+  border-radius: 2px;
+  padding: 0.7em 0.85em;
+  color: var(--oe-white);
+  font-family: var(--font-oe-body);
+  font-size: 0.92rem;
+  width: 100%;
+}
+.oe-field:focus {
+  border-color: var(--oe-white);
+  outline: none;
+}
+.oe-field::placeholder {
+  color: var(--oe-white-faint);
+}
+
+textarea.oe-field {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Status pill */
+.oe-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3em 0.65em;
+  border-radius: 999px;
+  border: 1px solid var(--oe-line-strong);
+  color: var(--oe-white-dim);
+}
+.oe-pill::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.oe-pill[data-status="uncontacted"] { color: var(--oe-status-uncontacted); }
+.oe-pill[data-status="sent"] { color: var(--oe-status-sent); }
+.oe-pill[data-status="replied"] { color: var(--oe-status-replied); }
+.oe-pill[data-status="interested"] { color: var(--oe-status-interested); }
+.oe-pill[data-status="won"] { color: var(--oe-status-won); }
+.oe-pill[data-status="lost"] { color: var(--oe-status-lost); }
+
+/* Toast */
+.oe-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--oe-white);
+  color: var(--oe-black);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  padding: 0.8em 1.4em;
+  border-radius: 2px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.oe-toast button {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
