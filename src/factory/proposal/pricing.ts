@@ -1,3 +1,5 @@
+import { grimhartWhatsappNumber } from "../grimhart";
+
 /**
  * GRIMHART's current commercial model. One source of truth: if it changes,
  * it changes here and every proposal follows.
@@ -53,7 +55,7 @@ export const pricingCopy: Record<"es" | "en", PricingCopy> = {
 };
 
 export function grimhartWhatsapp(message: string): string | null {
-  const number = process.env.NEXT_PUBLIC_GRIMHART_WHATSAPP?.replace(/\D/g, "");
-  if (!number || number.length < 8) return null;
+  const number = grimhartWhatsappNumber();
+  if (!number) return null;
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }

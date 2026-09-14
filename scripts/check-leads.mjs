@@ -134,14 +134,6 @@ for (const record of ledger.leads) {
   if (!slugs.includes(record.slug)) fail(`ledger "${record.slug}"`, "no matching folder in src/leads");
 }
 
-// The proposals' close depends on one environment value that cannot be guessed.
-if (!process.env.NEXT_PUBLIC_GRIMHART_WHATSAPP) {
-  console.log(
-    "\nNote: NEXT_PUBLIC_GRIMHART_WHATSAPP is not set, so the proposals show no WhatsApp CTA.\n" +
-      "Set it (digits only, e.g. 34600000000) locally and in the Vercel project.\n"
-  );
-}
-
 if (problems.length === 0) {
   console.log(`Checked ${slugs.length} lead(s). All clear.`);
 } else {

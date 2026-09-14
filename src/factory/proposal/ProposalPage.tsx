@@ -3,6 +3,7 @@ import path from "node:path";
 import Image from "next/image";
 import ProposalReveal from "./Reveal";
 import { PRICING, grimhartWhatsapp, pricingCopy, withApp } from "./pricing";
+import { GRIMHART } from "../grimhart";
 import { absolute, demoHome } from "../routes";
 import type { Lead } from "../types";
 import "./proposal.css";
@@ -235,8 +236,8 @@ export default function ProposalPage({ lead }: { lead: Lead }) {
             <p className="g-lead" style={{ maxWidth: "46ch" }}>{p.closing}</p>
           </ProposalReveal>
           <ProposalReveal delay={2} className="flex flex-wrap gap-3">
-            {/* No number configured (NEXT_PUBLIC_GRIMHART_WHATSAPP) means no CTA
-                rather than an invented one — the demo link carries the close instead. */}
+            {/* Falls back to the demo link rather than an invented number if the
+                WhatsApp number is ever cleared. */}
             {wa ? (
               <a className="g-btn" href={wa} target="_blank" rel="noopener noreferrer">
                 {p.ctaLabel}
@@ -252,7 +253,7 @@ export default function ProposalPage({ lead }: { lead: Lead }) {
       <footer className="g-wrap" style={{ paddingBottom: "clamp(3rem, 6vw, 5rem)" }}>
         <hr className="g-rule" />
         <div className="flex flex-col gap-2 pt-6 md:flex-row md:items-center md:justify-between">
-          <p className="g-eyebrow">GRIMHART · grimhart.com</p>
+          <p className="g-eyebrow">{GRIMHART.name} · {GRIMHART.site}</p>
           <p className="g-eyebrow">
             {locale === "en"
               ? "This site is a concept built for this proposal."
