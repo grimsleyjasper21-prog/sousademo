@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint src --max-warnings=0",
+    "check": "node scripts/check-leads.mjs",
+    "leads": "node scripts/leads.mjs",
+    "new-lead": "node scripts/new-lead.mjs",
+    "qa": "node scripts/qa.mjs",
+    "shots": "node scripts/shots.mjs",
+    "icons": "node scripts/icons.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0",

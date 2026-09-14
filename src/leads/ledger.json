@@ -1,0 +1,21 @@
+{
+  "_comment": "Internal GRIMHART lead record. Never rendered publicly \u2014 `npm run leads` prints it. Keeping design signatures here is what stops two consecutive demos looking like recolours of each other.",
+  "leads": [
+    {
+      "slug": "sousa",
+      "business": "SOUSA \u2014 The Hair Expert",
+      "vertical": "hair",
+      "location": "Palma de Mallorca",
+      "built": "2026-09-14",
+      "languages": [
+        "es",
+        "en"
+      ],
+      "designSignature": "dark-cinema \u00b7 bodoni/archivo \u00b7 copper \u00b7 editorial-index \u00b7 full-bleed-cta",
+      "bookingMode": "demo",
+      "pricing": "indicative",
+      "status": "ready-to-send",
+      "notes": "Prices are indicative and disclosed as such. Swap in SOUSA's real price list, then set catalogue.pricing to 'verified'."
+    }
+  ]
+}

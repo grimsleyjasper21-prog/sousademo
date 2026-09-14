@@ -1,0 +1,65 @@
+{
+  "_comment": "Starting points for a new lead's art direction, used by scripts/new-lead.mjs. Pick one that suits the business, then change it — a preset is a head start, not the finished design. `googleFonts` names the next/font imports the scaffolder writes into the lead's fonts.ts.",
+  "presets": [
+    {
+      "id": "dark-cinema",
+      "for": "Businesses with strong photography and a fashion register — hair, studios, bars.",
+      "mode": "dark",
+      "googleFonts": { "display": "Bodoni_Moda", "body": "Archivo" },
+      "fontStacks": { "display": "\"Bodoni Moda\", Georgia, serif", "body": "Archivo, -apple-system, sans-serif" },
+      "palette": { "ink": "#0a0908", "paper": "#f3ecdf", "surface": "#16130f", "surfaceAlt": "#1e1a15", "text": "#f3ecdf", "textDim": "#c7bcac", "textFaint": "#8f8577", "accent": "#b5652f", "accentBright": "#d98a4e", "accentContrast": "#0a0908", "line": "rgba(243, 236, 223, 0.14)", "lineStrong": "rgba(243, 236, 223, 0.30)", "focus": "#d9b76b" },
+      "typeScale": "grand", "radius": "sharp", "buttons": "solid", "rhythm": "airy", "motion": "cinematic", "imageTreatment": "full-bleed", "eyebrowStyle": "tracked-caps",
+      "variants": { "nav": "minimal-inline", "hero": "full-bleed-cinema", "services": "editorial-index", "reviews": "quote-feature", "location": "map-split", "footer": "editorial", "cta": "full-image" }
+    },
+    {
+      "id": "bone-editorial",
+      "for": "Calm, light, considered — therapeutic massage, wellness, clinics.",
+      "mode": "light",
+      "googleFonts": { "display": "Fraunces", "body": "Inter" },
+      "fontStacks": { "display": "Fraunces, Georgia, serif", "body": "Inter, -apple-system, sans-serif" },
+      "palette": { "ink": "#f6f4ef", "paper": "#ffffff", "surface": "#efece4", "surfaceAlt": "#e6e2d8", "text": "#1b1a17", "textDim": "#55524b", "textFaint": "#8a867d", "accent": "#2f4739", "accentBright": "#3f6350", "accentContrast": "#f6f4ef", "line": "rgba(27, 26, 23, 0.12)", "lineStrong": "rgba(27, 26, 23, 0.26)", "focus": "#2f4739" },
+      "typeScale": "editorial", "radius": "soft", "buttons": "solid", "rhythm": "airy", "motion": "subtle", "imageTreatment": "framed", "eyebrowStyle": "rule",
+      "variants": { "nav": "rule-under", "hero": "split-editorial", "services": "image-grid", "reviews": "quote-feature", "location": "detail-stack", "footer": "editorial", "cta": "split-panel" }
+    },
+    {
+      "id": "terracotta-warmth",
+      "for": "Warm, tactile, hospitable — beauty, nails, small restaurants.",
+      "mode": "light",
+      "googleFonts": { "display": "Cormorant_Garamond", "body": "Karla" },
+      "fontStacks": { "display": "\"Cormorant Garamond\", Georgia, serif", "body": "Karla, -apple-system, sans-serif" },
+      "palette": { "ink": "#fbf6f1", "paper": "#ffffff", "surface": "#f4e9df", "surfaceAlt": "#ecdccd", "text": "#2a1d16", "textDim": "#6a564a", "textFaint": "#9c8779", "accent": "#b4553a", "accentBright": "#c96a4c", "accentContrast": "#fbf6f1", "line": "rgba(42, 29, 22, 0.12)", "lineStrong": "rgba(42, 29, 22, 0.24)", "focus": "#b4553a" },
+      "typeScale": "editorial", "radius": "round", "buttons": "pill", "rhythm": "balanced", "motion": "lively", "imageTreatment": "masked", "eyebrowStyle": "tracked-caps",
+      "variants": { "nav": "centered-serif", "hero": "frame-portrait", "services": "feature-rail", "reviews": "stacked-cards", "location": "detail-stack", "footer": "compact", "cta": "split-panel" }
+    },
+    {
+      "id": "sea-glass",
+      "for": "Coastal and tourist-facing — beach restaurants, bars, seafront businesses.",
+      "mode": "light",
+      "googleFonts": { "display": "Syne", "body": "Work_Sans" },
+      "fontStacks": { "display": "Syne, -apple-system, sans-serif", "body": "\"Work Sans\", -apple-system, sans-serif" },
+      "palette": { "ink": "#f2f5f4", "paper": "#ffffff", "surface": "#e4ebea", "surfaceAlt": "#d6e0df", "text": "#10201f", "textDim": "#40514f", "textFaint": "#798a88", "accent": "#0f6b63", "accentBright": "#158a80", "accentContrast": "#f2f5f4", "line": "rgba(16, 32, 31, 0.12)", "lineStrong": "rgba(16, 32, 31, 0.26)", "focus": "#0f6b63" },
+      "typeScale": "compact", "radius": "soft", "buttons": "outline", "rhythm": "dense", "motion": "subtle", "imageTreatment": "clean", "eyebrowStyle": "numbered",
+      "variants": { "nav": "centered-serif", "hero": "stacked-type", "services": "menu-columns", "reviews": "review-rail", "location": "map-full", "footer": "map-split", "cta": "quiet-band" }
+    },
+    {
+      "id": "midnight-botanic",
+      "for": "Deep, quiet, plant-led — spas, thai massage, treatment rooms.",
+      "mode": "dark",
+      "googleFonts": { "display": "Libre_Baskerville", "body": "Jost" },
+      "fontStacks": { "display": "\"Libre Baskerville\", Georgia, serif", "body": "Jost, -apple-system, sans-serif" },
+      "palette": { "ink": "#0c1310", "paper": "#eef3ee", "surface": "#131d18", "surfaceAlt": "#1a2620", "text": "#eef3ee", "textDim": "#b6c4ba", "textFaint": "#7d8d83", "accent": "#7fa583", "accentBright": "#9cc3a0", "accentContrast": "#0c1310", "line": "rgba(238, 243, 238, 0.13)", "lineStrong": "rgba(238, 243, 238, 0.28)", "focus": "#9cc3a0" },
+      "typeScale": "editorial", "radius": "sharp", "buttons": "solid", "rhythm": "airy", "motion": "cinematic", "imageTreatment": "full-bleed", "eyebrowStyle": "rule",
+      "variants": { "nav": "minimal-inline", "hero": "split-editorial", "services": "image-grid", "reviews": "quote-feature", "location": "map-full", "footer": "editorial", "cta": "full-image" }
+    },
+    {
+      "id": "paper-modern",
+      "for": "Precise and unornamented — barbers, opticians, design-led retail, clinics.",
+      "mode": "light",
+      "googleFonts": { "display": "Instrument_Serif", "body": "Inter_Tight" },
+      "fontStacks": { "display": "\"Instrument Serif\", Georgia, serif", "body": "\"Inter Tight\", -apple-system, sans-serif" },
+      "palette": { "ink": "#ffffff", "paper": "#ffffff", "surface": "#f4f4f3", "surfaceAlt": "#e9e9e7", "text": "#0f0f0f", "textDim": "#4b4b4b", "textFaint": "#8b8b8b", "accent": "#0f0f0f", "accentBright": "#333333", "accentContrast": "#ffffff", "line": "rgba(15, 15, 15, 0.12)", "lineStrong": "rgba(15, 15, 15, 0.28)", "focus": "#0f0f0f" },
+      "typeScale": "grand", "radius": "sharp", "buttons": "underline", "rhythm": "balanced", "motion": "subtle", "imageTreatment": "clean", "eyebrowStyle": "numbered",
+      "variants": { "nav": "rule-under", "hero": "stacked-type", "services": "editorial-index", "reviews": "stacked-cards", "location": "map-split", "footer": "compact", "cta": "quiet-band" }
+    }
+  ]
+}

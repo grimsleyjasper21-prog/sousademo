@@ -1,30 +1,24 @@
-import { BookingSelectionProvider } from "@/lib/booking-selection";
-import Hero from "@/components/Hero";
-import BrandStatement from "@/components/BrandStatement";
-import TheStrand from "@/components/TheStrand";
-import Editorial from "@/components/Editorial";
-import Services from "@/components/Services";
-import Transformation from "@/components/Transformation";
-import Booking from "@/components/Booking";
-import AppSection from "@/components/AppSection";
-import Reputation from "@/components/Reputation";
-import LocationHours from "@/components/LocationHours";
-import FinalCta from "@/components/FinalCta";
+import { grimhartFontClass } from "@/factory/proposal/fonts";
+import "@/factory/proposal/proposal.css";
 
+/**
+ * The environment's front door. Deliberately says nothing about which
+ * businesses are being pitched — the lead ledger is internal (`npm run leads`).
+ */
 export default function Home() {
   return (
-    <BookingSelectionProvider>
-      <Hero />
-      <BrandStatement />
-      <TheStrand />
-      <Editorial />
-      <Services />
-      <Transformation />
-      <Booking />
-      <AppSection />
-      <Reputation />
-      <LocationHours />
-      <FinalCta />
-    </BookingSelectionProvider>
+    <div className={`grimhart ${grimhartFontClass}`} style={{ display: "flex", alignItems: "center", minHeight: "100svh" }}>
+      <div className="g-wrap flex flex-col gap-8">
+        <p className="g-eyebrow">GRIMHART</p>
+        <h1 className="g-display" style={{ maxWidth: "12ch" }}>
+          Demo environment
+        </h1>
+        <p className="g-lead" style={{ maxWidth: "44ch" }}>
+          Personalised concept sites built for specific businesses. Each one lives at its own
+          address and is shared directly.
+        </p>
+        <p className="g-eyebrow">grimhart.com</p>
+      </div>
+    </div>
   );
 }

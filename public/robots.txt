@@ -1,2 +1,4 @@
+# Every demo here is a speculative concept built for a specific business.
+# It must never compete with that business's real site in search results.
 User-agent: *
 Disallow: /

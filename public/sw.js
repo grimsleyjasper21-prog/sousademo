@@ -1,14 +1,11 @@
-/* SOUSA — The Hair Expert. Minimal service worker.
-   Ensures installability and keeps the app shell reachable offline;
-   everything else falls back to the network (Next.js assets are
-   content-hashed per build, so we don't try to hard-precache them). */
-const CACHE_NAME = "sousa-shell-v1";
-const SHELL_URLS = ["/", "/manifest.json", "/icons/icon-192.png", "/icons/icon-512.png"];
+/* GRIMHART demo factory — minimal service worker.
+   Its only job is installability plus an offline fallback for pages the visitor
+   has already seen. Next.js assets are content-hashed per build, so nothing is
+   hard-precached: stale shells are worse than a network round trip. */
+const CACHE_NAME = "grimhart-shell-v2";
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL_URLS)).then(() => self.skipWaiting())
-  );
+self.addEventListener("install", () => {
+  self.skipWaiting();
 });
 
 self.addEventListener("activate", (event) => {
@@ -26,20 +23,18 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  // Availability and bookings must always hit the network.
+  if (url.pathname.startsWith("/api/")) return;
 
   if (request.mode === "navigate") {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, response.clone()));
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
           return response;
         })
         .catch(() => caches.match(request).then((cached) => cached || caches.match("/")))
     );
-    return;
   }
-
-  event.respondWith(
-    caches.match(request).then((cached) => cached || fetch(request).catch(() => cached))
-  );
 });

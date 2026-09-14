@@ -1,62 +1,58 @@
-# Connecting a client's own Google Calendar
+# Connecting a calendar to a GRIMHART demo
 
-Every booking on the site POSTs to one Apps Script URL (set via an
-environment variable — see below). Whoever *deployed* that script is
-whose calendar the bookings land on. So: **deploy one copy of this
-script per client, under the client's own Google account**, and point
-that client's website deployment at the resulting URL.
+Bookings never leave the browser directly. The flow is:
 
-You do not need the client's password or any OAuth setup on your end —
-just get them to do steps 1–5 below (or do it yourself while logged
-into their Google account, e.g. screen-sharing), then hand you the URL
-from step 5.
+```
+browser → /api/book (this site, server-side) → Apps Script /exec → Google Calendar
+browser → /api/availability → Apps Script /exec?action=busy → Google Calendar
+```
+
+Whoever *deployed* the Apps Script is whose calendar bookings land on. So:
+**deploy one copy of `Code.gs` per client, under the client's own Google
+account**, and point that lead at the resulting URL.
+
+While a demo is still a sales demo, leave it pointed at the shared GRIMHART
+demo endpoint (the built-in default). Every event carries the lead slug and
+the lead's `eventPrefix`, so demo bookings are easy to tell apart.
 
 ## Deploy steps (5–10 minutes, per client)
 
 1. On the **client's** Google account, go to [script.google.com](https://script.google.com) → **New project**.
-2. Delete the placeholder code and paste in the contents of `Code.gs` from this folder.
-3. (Optional but recommended) Change `EXPECTED_TOKEN` at the top to a
-   unique string for this client — anything works, it just has to
-   match what you put in the website's `CALENDAR_DEMO_TOKEN` env var.
-4. Click **Deploy → New deployment**:
+2. Delete the placeholder code and paste in the contents of `Code.gs`.
+3. Change `EXPECTED_TOKEN` to something unique for this client, and set
+   `TIME_ZONE` if they are not on `Europe/Madrid`.
+4. **Deploy → New deployment**:
    - Type: **Web app**
    - Execute as: **Me** (this is what makes it write to *their* calendar)
    - Who has access: **Anyone**
-5. Click **Deploy**, approve the permission prompts (it'll ask to
-   manage their Calendar — that's expected), then copy the URL ending
-   in `/exec`.
-6. Bookings will now appear on that Google account's default calendar
-   (whichever calendar the client already uses day-to-day).
+5. **Deploy**, approve the Calendar permission prompt, copy the URL ending in `/exec`.
 
-## Pointing the website at it
+## Pointing a lead at it
 
-In the site's environment variables (Vercel project → Settings →
-Environment Variables, or `.env.local` for local dev), set:
+Environment variables are read **server-side only** — none of this reaches the
+browser. `<REF>` is the lead's `booking.calendarRef`, upper-cased (e.g. `SOUSA`).
 
 ```
-NEXT_PUBLIC_CALENDAR_ENDPOINT_URL=<the /exec URL from step 5>
-NEXT_PUBLIC_CALENDAR_DEMO_TOKEN=<the token from step 3, if you changed it>
+CALENDAR_ENDPOINT_URL_<REF>=<the /exec URL from step 5>
+CALENDAR_TOKEN_<REF>=<the token from step 3>
 ```
 
-Redeploy the site (Vercel does this automatically on env var changes
-if you trigger a redeploy). No code changes needed per client — see
-`src/lib/calendar.ts`, which reads these two values with the current
-GRIMHART demo endpoint as the fallback if they're unset.
+`CALENDAR_ENDPOINT_URL` / `CALENDAR_TOKEN` without a suffix set the default for
+every lead. With nothing set at all, bookings go to the shared GRIMHART demo
+calendar.
 
-## Sanity-checking a deploy
+Then set the lead's `booking.mode` to `"apps-script"` so the site also *reads*
+availability from that calendar instead of generating it from opening hours.
 
-Open the `/exec` URL directly in a browser. You should see:
-`{"status":"ok","message":"SOUSA calendar endpoint is live."}` — if
-you see a Google sign-in page instead, "Who has access" wasn't set to
-**Anyone** in step 4.
+## Checking a deploy
+
+- Open the `/exec` URL in a browser → `{"status":"ok","message":"GRIMHART calendar endpoint is live."}`
+  (a Google sign-in page instead means step 4's "Who has access" wasn't **Anyone**).
+- Add `?action=busy&date=2026-01-15&token=<your token>` → `{"status":"ok","date":...,"busy":[...]}`.
 
 ## Notes
 
-- Each client's script is fully independent — one client's booking
-  traffic never touches another's calendar or script.
-- If you want SOUSA (or any client) to see this on their phone
-  automatically, it's just their normal Google Calendar app — nothing
-  extra to install.
-- The demo token is a lightweight shared secret, not real
-  authentication. Fine for a small business booking form; if this
-  scales up, put real auth in front of the Apps Script.
+- Each client's script is independent — one client's bookings never touch another's calendar.
+- Busy ranges come back as local `HH:mm`. Events marked "free" (transparent) don't block a slot; all-day events block the day.
+- A script copy deployed before the `busy` action existed still works for bookings: the site falls back to opening-hours availability and says so in the UI.
+- The token is a lightweight shared secret, not authentication. Fine for a small-business booking form.
